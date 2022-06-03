@@ -1,0 +1,17 @@
+metabase
+
+*-debug.log
+*-debug.log
+*-error.log
+*-error.log
+./src/git-minner/.nyc_output
+./src/git-minner/dist
+./src/git-minner/dist
+./src/git-minner/lib
+./src/git-minner/lib
+./src/git-minner/package-lock.json
+./src/git-minner/tmp
+./src/git-minner/tmp
+./src/git-minner/node_modules
+node_modules
+oclif.manifest.json

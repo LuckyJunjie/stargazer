@@ -1,0 +1,14 @@
+{
+  "name": "stargazer",
+  "version": "1.0.0",
+  "description": "Code and effort analyze tools, gather data from git history, JIRA, code, and specifciation.",
+  "main": "index.js",
+  "repository": "git@github.com:LuckyJunjie/stargazer.git",
+  "author": "panjunjie <panjunjie8611@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.13.4",
+    "sqlite3": "^5.0.8",
+    "ts-node": "^10.8.1"
+  }
+}

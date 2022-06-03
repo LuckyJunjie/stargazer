@@ -1,0 +1,59 @@
+@startuml
+
+title Stargazer - Components Diagram
+
+' sources
+collections commits
+cloud JIRA
+file repo
+
+
+node "Stargazer" {
+
+' key roles 
+
+package core{
+interface IReport as Reporter
+interface IMiner as Miner
+interface Superviser
+database Database
+
+}
+
+' reporters
+package GUI{
+component [Metabase] as metabase
+component [Angular] as ng
+}
+
+Reporter --> [metabase]
+Reporter --> [ng]
+
+
+' Miners
+package extension{
+component [Babel Miner] as codeMiner
+component [Git Miner] as historyMiner
+component [JIRA Parser] as effortMiner
+
+}
+}
+
+codeMiner --> Miner
+historyMiner --> Miner
+effortMiner --> Miner
+
+
+Database --> Reporter
+Miner --> Database
+
+
+repo --> codeMiner
+commits --> historyMiner
+JIRA --> effortMiner
+
+
+Superviser ..> Miner :  loop to update data
+
+
+@enduml

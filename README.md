@@ -1,0 +1,1 @@
+# This project analyze the SW with git commits and other information, 

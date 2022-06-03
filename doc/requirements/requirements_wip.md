@@ -1,0 +1,2 @@
+1. AS a MEE team member: I want to search the history information regarding to CB00XX feature, so that I can check the history effort and implementation as a reference when I give EE for new feature.
+2. AS a MEE team member: I xx

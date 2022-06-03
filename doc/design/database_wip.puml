@@ -1,0 +1,78 @@
+@startuml
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <u>x</u>
+hide methods
+hide stereotypes
+
+table(file_type) {
+  primary_key(id)
+  type_name
+  description
+  min_hour
+  medium_hour
+  maximum_hour
+}
+note left
+coding tasks type, for example there can be 
+e2e, nestjs, angular component, ngrx etc.
+this part depends on user defined code type, 
+and the babel plugin or other 
+technology scan from code. 
+
+expected output would be 
+xxx file ------ type1, type2, type3
+end note
+
+table(file_segment) {
+  primary_key(id)
+  name
+  path
+  LOC
+  type
+}
+
+table(file) {
+  primary_key(id)
+  name
+  path
+  LOC
+  type
+}
+
+table(commits) {
+  primary_key(id)
+  file_id
+  author
+  reviewer
+}
+
+
+table(features) {
+  primary_key(id)
+  commits
+}
+
+
+table(functions) {
+  primary_key(id)
+  file_id
+  
+}
+
+table(reports) {
+  primary_key(id)
+  feature_id
+  function_id
+}
+
+
+file::type "1" *-- "many" file_type::id
+commits::file_id "1" *-- "many" file::type 
+
+features "1" *-- "many" commits
+functions "1" *-- "many" file
+
+reports "1" *-- "many" features
+reports "1" *-- "many" functions
+
+@enduml
