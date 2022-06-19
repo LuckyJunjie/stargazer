@@ -19,7 +19,10 @@
   "dependencies": {
     "@oclif/core": "^1",
     "@oclif/plugin-help": "^5",
-    "@oclif/plugin-plugins": "^2.0.1"
+    "@oclif/plugin-plugins": "^2.0.1",
+    "sequelize": "^6.21.0",
+    "sequelize-auto": "^0.8.8",
+    "sqlite3": "^5.0.8"
   },
   "devDependencies": {
     "@oclif/test": "^2",
@@ -33,6 +36,7 @@
     "globby": "^11",
     "mocha": "^9",
     "oclif": "^3",
+    "sequelize-cli": "^6.4.1",
     "shx": "^0.3.3",
     "ts-node": "^10.2.1",
     "tslib": "^2.3.1",

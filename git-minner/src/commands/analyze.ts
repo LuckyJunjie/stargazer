@@ -1,4 +1,5 @@
 import { Command, Flags } from '@oclif/core';
+import GitMinnerDatabase from '../database/git-minner-db';
 const getCommits = require("../git/git");
 const MOCK_REPO = '/home/junjie/code/stargazer/mock-project';
 
@@ -31,12 +32,31 @@ export default class Analyze extends Command {
     const path = '';
     const commits = await getCommits(MOCK_REPO, last, before);
     commits.forEach((com: any) => {
-
       this.log(com.id);
       this.log(com.date);
       this.log(com.author);
-      this.log(com.content);
+      this.log(this.getAuthor(com.content));
+      this.log(this.getFetaureId(com.content));
+      this.log(this.getJIRATaskId(com.content));
     });
 
+    const db = new GitMinnerDatabase();
+    db.run().catch(err => console.error(err));
+  }
+
+  private getAuthor(content: string): string {
+    return this.findSpecificTag(content, 'Author:');
+  }
+
+  private getFetaureId(content: string): string {
+    return this.findSpecificTag(content, 'FEATURE_ID:');
+  }
+
+  private getJIRATaskId(content: string): string {
+    return this.findSpecificTag(content, 'JIRA_ID:');
+  }
+
+  private findSpecificTag(content: string, tag: string): string {
+    return content.split('\n').filter((rowContent: string) => { return rowContent.match(tag) })[0].replace(tag, '').trim();
   }
 }
