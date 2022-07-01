@@ -29,18 +29,22 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`git-minnor hello PERSON`](#git-minnor-hello-person)
-* [`git-minnor hello world`](#git-minnor-hello-world)
-* [`git-minnor help [COMMAND]`](#git-minnor-help-command)
-* [`git-minnor plugins`](#git-minnor-plugins)
-* [`git-minnor plugins:install PLUGIN...`](#git-minnor-pluginsinstall-plugin)
-* [`git-minnor plugins:inspect PLUGIN...`](#git-minnor-pluginsinspect-plugin)
-* [`git-minnor plugins:install PLUGIN...`](#git-minnor-pluginsinstall-plugin-1)
-* [`git-minnor plugins:link PLUGIN`](#git-minnor-pluginslink-plugin)
-* [`git-minnor plugins:uninstall PLUGIN...`](#git-minnor-pluginsuninstall-plugin)
-* [`git-minnor plugins:uninstall PLUGIN...`](#git-minnor-pluginsuninstall-plugin-1)
-* [`git-minnor plugins:uninstall PLUGIN...`](#git-minnor-pluginsuninstall-plugin-2)
-* [`git-minnor plugins update`](#git-minnor-plugins-update)
+- [oclif-hello-world](#oclif-hello-world)
+- [Usage](#usage)
+- [Commands](#commands)
+  - [`git-minnor hello PERSON`](#git-minnor-hello-person)
+  - [`git-minnor hello world`](#git-minnor-hello-world)
+  - [`git-minnor help [COMMAND]`](#git-minnor-help-command)
+  - [`git-minnor plugins`](#git-minnor-plugins)
+  - [`git-minnor plugins:install PLUGIN...`](#git-minnor-pluginsinstall-plugin)
+  - [`git-minnor plugins:inspect PLUGIN...`](#git-minnor-pluginsinspect-plugin)
+  - [`git-minnor plugins:install PLUGIN...`](#git-minnor-pluginsinstall-plugin-1)
+  - [`git-minnor plugins:link PLUGIN`](#git-minnor-pluginslink-plugin)
+  - [`git-minnor plugins:uninstall PLUGIN...`](#git-minnor-pluginsuninstall-plugin)
+  - [`git-minnor plugins:uninstall PLUGIN...`](#git-minnor-pluginsuninstall-plugin-1)
+  - [`git-minnor plugins:uninstall PLUGIN...`](#git-minnor-pluginsuninstall-plugin-2)
+  - [`git-minnor plugins update`](#git-minnor-plugins-update)
+  - [Run test command](#run-test-command)
 
 ## `git-minnor hello PERSON`
 
@@ -332,3 +336,6 @@ DESCRIPTION
   Update installed plugins.
 ```
 <!-- commandsstop -->
+
+## Run test command
+./bin/dev analyze
