@@ -1,0 +1,131 @@
+@startuml
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <u>x</u>
+hide methods
+hide stereotypes
+
+table(code_task_type) {
+  primary_key(id)
+  name
+  description
+  min_effort
+  max_effort
+  middle_effort
+}
+note left
+coding tasks type, for example there can be 
+e2e, nestjs, angular component, ngrx etc.
+this part depends on user defined code type, 
+and the babel plugin or other 
+technology scan from code. 
+
+expected output would be 
+xxx file ------ type1, type2, type3
+end note
+
+
+table(jira_tasks) {
+  primary_key(id)
+  description
+  assignee
+  effort
+}
+
+table(file) {
+  primary_key(id)
+  name
+  project
+  path
+  loc
+  type_id
+}
+
+table(commits) {
+  primary_key(id)
+  author_id
+  reviewer_id
+  feature_id
+  jira_id
+}
+
+table(file_change) {
+  primary_key(id)
+  commit_id
+  file_id
+  type_id
+  loc
+}
+
+
+table(features) {
+  primary_key(id)
+  name
+  description
+  release
+}
+
+
+table(functions) {
+  primary_key(id)
+  name
+  description
+}
+
+table(reports) {
+  primary_key(id)
+  feature_id
+  function_id
+}
+
+table(engineer) {
+  primary_key(id)
+  name
+  email
+  team_id
+}
+
+table(team) {
+  primary_key(id)
+  name
+  fa_id
+}
+
+table(fa) {
+  primary_key(id)
+  name
+  ca_id
+}
+
+table(ca) {
+  primary_key(id)
+  name
+  tribe
+}
+
+commits::author_id "1" *-- "many" engineer::id 
+commits::feature_id "1" *-- "many" features::id 
+commits::jira_id "1" *-- "many" jira_tasks::id 
+
+file_change::commit_id "1" *-- "many" commits::id 
+file_change::file_id "1" *-- "many" file::id 
+file_change::type_id "1" *-- "many" code_task_type::id 
+
+features "1" *-- "many" commits
+functions "1" *-- "many" file
+
+
+
+reports "1" *-- "many" features
+reports "1" *-- "many" functions
+
+
+
+ca "1" *-- "many" fa
+fa "1" *-- "many" team
+engineer "1" *-- "many" team
+
+
+
+
+
+@enduml
