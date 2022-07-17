@@ -1,10 +1,10 @@
 @startuml
-!define table(x) class x << (T,#FFAAAA) >>
+!define table(x, color) class x << (T,color) >>
 !define primary_key(x) <u>x</u>
 hide methods
 hide stereotypes
 
-table(code_task_type) {
+table(code_task_type, #FFAAAA) {
   primary_key(id)
   name
   description
@@ -13,7 +13,7 @@ table(code_task_type) {
   middle_effort
 }
 note left
-coding tasks type, for example there can be 
+Coding tasks type, for example there can be 
 e2e, nestjs, angular component, ngrx etc.
 this part depends on user defined code type, 
 and the babel plugin or other 
@@ -23,32 +23,79 @@ expected output would be
 xxx file ------ type1, type2, type3
 end note
 
-
-table(jira_tasks) {
+table(jira_epic, #00FFFF) {
   primary_key(id)
   description
   assignee
   effort
+  feature_id
 }
+note left
+Data import from PBI, 
+which linked to features and jira_tasks with 'feature_id'
+additional logic to convert the mapping is required
+end note
 
-table(file) {
+table(jira_tasks, #DCDCDC) {
+  primary_key(id)
+  epic_id
+  description
+  assignee
+  effort
+  feature_id
+}
+note left
+Data fetch from JIRA service, 
+logic to parse the jira task id and fetch the effort
+end note
+
+
+table(file, #FFAAAA) {
   primary_key(id)
   name
   project
   path
   loc
-  type_id
+  function_id
 }
 
-table(commits) {
+table(commits, #7CFC00) {
   primary_key(id)
   author_id
   reviewer_id
   feature_id
   jira_id
+  message
 }
 
-table(file_change) {
+table(commits_rough, #00FFFF) {
+  primary_key(id)
+  author
+  reviewer
+  feature
+  jira
+  message
+}
+note left
+This table is quick prototype solution
+which aim to replace the table commits,
+
+1. commits_rough scan from git history,
+2. jira_epic import from BPI, 
+3. features scan from the 1 and 2 tables
+
+when the three tables are ready, MEE members
+can ask stargazer "Show me the feature CB00xxxx history effort."
+and stargazer show the features commit, author, total effort.
+
+while stargazer cannot show 
+1. The organization of author, analyze from org perspective.
+2. Jira task details, each author tasks and their effort.
+3. Each coding task details type and effort consumed.
+4. File details, analyze from function perspective.
+end note
+
+table(file_change, #FFAAAA) {
   primary_key(id)
   commit_id
   file_id
@@ -57,7 +104,7 @@ table(file_change) {
 }
 
 
-table(features) {
+table(features, #00FFFF) {
   primary_key(id)
   name
   description
@@ -65,54 +112,54 @@ table(features) {
 }
 
 
-table(functions) {
+table(functions, #FFAAAA) {
   primary_key(id)
   name
   description
 }
 
-table(reports) {
+table(reports, #FFAAAA) {
   primary_key(id)
   feature_id
   function_id
 }
 
-table(engineer) {
+table(engineer, #DCDCDC) {
   primary_key(id)
   name
   email
   team_id
 }
 
-table(team) {
+table(team, #DCDCDC) {
   primary_key(id)
   name
   fa_id
 }
 
-table(fa) {
+table(fa, #DCDCDC) {
   primary_key(id)
   name
   ca_id
 }
 
-table(ca) {
+table(ca, #DCDCDC) {
   primary_key(id)
   name
   tribe
 }
 
-commits::author_id "1" *-- "many" engineer::id 
-commits::feature_id "1" *-- "many" features::id 
-commits::jira_id "1" *-- "many" jira_tasks::id 
+engineer::id "1" *-- "many" commits::author_id
+features::id "1" *-- "many"  commits::feature_id
+features::id "1" *-- "many"  jira_epic::feature_id
+jira_tasks::id "1" *-- "many"  commits::jira_id
+jira_epic::id "1" *-- "many"  jira_tasks::epic_id
 
-file_change::commit_id "1" *-- "many" commits::id 
-file_change::file_id "1" *-- "many" file::id 
+commits::id "1" *-- "many"  file_change::commit_id
+file::id  "1" *-- "many" file_change::file_id
 file_change::type_id "1" *-- "many" code_task_type::id 
 
-features "1" *-- "many" commits
 functions "1" *-- "many" file
-
 
 
 reports "1" *-- "many" features
@@ -122,7 +169,7 @@ reports "1" *-- "many" functions
 
 ca "1" *-- "many" fa
 fa "1" *-- "many" team
-engineer "1" *-- "many" team
+engineer "1" -- "1" team
 
 
 

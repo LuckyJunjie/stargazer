@@ -17,3 +17,4 @@ node_modules
 oclif.manifest.json
 
 reporter
+./src/database/*.sqlite
