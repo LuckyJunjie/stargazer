@@ -1,7 +1,8 @@
 import { Command, Flags } from '@oclif/core';
 import GitMinnerDatabase from '../database/git-minner-db';
 const getCommits = require("../git/git");
-const MOCK_REPO = '/home/junjie/code/stargazer/mock-project';
+// const MOCK_REPO = '/home/junjie/code/stargazer/mock-project';
+const MOCK_REPO = '../../mock-project';
 
 export default class Analyze extends Command {
   static description = 'describe the command here';
@@ -30,14 +31,15 @@ export default class Analyze extends Command {
 
     const last = 10, before = null;
     const path = '';
+    this.log(`Get commits from the path ${MOCK_REPO}`);
     const commits = await getCommits(MOCK_REPO, last, before);
     commits.forEach((com: any) => {
-      this.log(com.id);
-      this.log(com.date);
-      this.log(com.author);
-      this.log(this.getAuthor(com.content));
-      this.log(this.getFetaureId(com.content));
-      this.log(this.getJIRATaskId(com.content));
+      this.log(`commit.id: ${com.id}`);
+      this.log(`commit.date: ${com.date}`);
+      this.log(`commit.author: ${com.author}`);
+      this.log(`commit.getAuthor: ${this.getAuthor(com.content)}`);
+      this.log(`commit.getFetaureId: ${this.getFetaureId(com.content)}`);
+      this.log(`commit.getJIRATaskId: ${this.getJIRATaskId(com.content)}`);
     });
 
     const db = new GitMinnerDatabase();
@@ -49,14 +51,23 @@ export default class Analyze extends Command {
   }
 
   private getFetaureId(content: string): string {
-    return this.findSpecificTag(content, 'FEATURE_ID:');
+    return this.findSpecificTag(content, '%Feature-Id');
   }
 
   private getJIRATaskId(content: string): string {
-    return this.findSpecificTag(content, 'JIRA_ID:');
+    return this.findSpecificTag(content, '%Jira-Id:');
   }
 
   private findSpecificTag(content: string, tag: string): string {
-    return content.split('\n').filter((rowContent: string) => { return rowContent.match(tag) })[0].replace(tag, '').trim();
+    // return content.split('\n').filter((rowContent: string) => { return rowContent.match(tag) })[0].replace(tag, '').trim();
+
+    let searchTarget :string = content.split('\n').filter((rowContent: string) => { return rowContent.match(tag) })[0];
+
+    if (searchTarget)
+    {
+      searchTarget = searchTarget.replace(tag, '').trim();
+    }
+    return searchTarget;
+
   }
 }

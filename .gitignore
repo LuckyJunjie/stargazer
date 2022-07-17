@@ -15,3 +15,5 @@ metabase
 ./src/git-minner/node_modules
 node_modules
 oclif.manifest.json
+
+reporter

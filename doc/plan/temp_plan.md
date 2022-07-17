@@ -27,7 +27,7 @@ XXX ---- the task has been finished
 13. parse logic for the commit message object
 14. test run the cli to parse real target project***
 
-15. Metabase for Git minor present  <----- can be start
+15. Metabase for Git minor present  <----- can be start ++++ HERE2022.07.15
 16. introduce bazel to manage the project
 
 
